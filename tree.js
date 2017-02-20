@@ -2,6 +2,9 @@ var scene,
     camera, cameraControls, fieldOfView, aspectRatio, nearPlane, farPlane,
     renderer, container;
 
+var rotationspeed = 0.002;
+var group = new THREE.Group();
+
 var hemisphereLight, shadowLight;
 
 var HEIGHT, WIDTH,
@@ -45,19 +48,9 @@ function createLights() {
 	// hemisphereLight.color.setHSL( 1, 1, 1 );
 	// hemisphereLight.groundColor.setHSL( 0.095, 1, 0.75 );
 	hemisphereLight.position.set( 0, 100, 0 );
-	// A directional light shines from a specific direction. 
-	// It acts like the sun, that means that all the rays produced are parallel. 
 	shadowLight = new THREE.DirectionalLight(0xffffff, .9);
 	shadowLight.position.set(0, 10, 20);
 	shadowLight.castShadow = true;
-	shadowLight.shadow.camera.left = -400;
-	shadowLight.shadow.camera.right = 400;
-	shadowLight.shadow.camera.top = 400;
-	shadowLight.shadow.camera.bottom = -400;
-	shadowLight.shadow.camera.near = 1;
-	shadowLight.shadow.camera.far = 1000;
-	shadowLight.shadow.mapSize.width = 2048;
-	shadowLight.shadow.mapSize.height = 2048;
 	scene.add(hemisphereLight);
 	scene.add(shadowLight);
 }
@@ -67,6 +60,12 @@ function render() {
 }
 
 function animate() {
+	if(group.rotation.y > 1.2 || group.rotation.y < 0) {
+		rotationspeed = -1 * rotationspeed;
+	}
+	group.rotation.y += rotationspeed;
+	console.log(rotationspeed);
+	// tree.rotation.y += .01;
     window.requestAnimationFrame(animate);
     cameraControls.update();
     render();
@@ -74,11 +73,10 @@ function animate() {
 
 function init() {
     createScene();
-    createLights()
-	var treemesh = null;
+    createLights();
 	var loader = new THREE.ObjectLoader();
 	loader.load('./lowpolytree.json', function(loadedObj, materials) {
-	    var treemesh = loadedObj.getObjectByName("Tree");
+	    var tree = loadedObj.getObjectByName("Tree");
 	    var mat = new THREE.MeshPhongMaterial({
 			color:0x68c3c0,
 			transparent:true,
@@ -90,12 +88,12 @@ function init() {
 	    var leaf1 = loadedObj.getObjectByName("Leaf1");
 	    var leaf2 = loadedObj.getObjectByName("Leaf2");
 	    var earth = loadedObj.getObjectByName("Earth");
-	    console.log(earth);
 	    // mesh.position.y = -100;
-	    scene.add(treemesh);
-	    scene.add(leaf1);
-	    scene.add(leaf2);
-	    scene.add(earth);
+	    group.add(tree);
+	    group.add(leaf1);
+	    group.add(leaf2);
+	    group.add(earth);
+	    scene.add(group);
 	    animate();
 	});
 
