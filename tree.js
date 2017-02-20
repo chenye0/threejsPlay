@@ -64,7 +64,6 @@ function animate() {
 		rotationspeed = -1 * rotationspeed;
 	}
 	group.rotation.y += rotationspeed;
-	console.log(rotationspeed);
 	// tree.rotation.y += .01;
     window.requestAnimationFrame(animate);
     cameraControls.update();
