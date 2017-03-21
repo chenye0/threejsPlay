@@ -2,7 +2,7 @@ var scene,
     camera, cameraControls, fieldOfView, aspectRatio, nearPlane, farPlane,
     renderer, container;
 
-var rotationspeed = 0.002;
+var rotationspeed = 0.02;
 var group = new THREE.Group();
 
 var hemisphereLight, shadowLight;
