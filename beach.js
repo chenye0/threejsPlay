@@ -38,7 +38,7 @@ function createScene() {
 	//Setup OrbitControls
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
 	cameraControls.target = new THREE.Vector3(0, 8, 0);
-	cameraControls.minPolarAngle = Math.PI/6; // radians
+	cameraControls.minPolarAngle = Math.PI/4; // radians
 	cameraControls.maxPolarAngle = Math.PI/2 + 0.1; // radians
 	cameraControls.minDistance = 0;
 	cameraControls.maxDistance = 45;
